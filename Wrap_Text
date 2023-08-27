@@ -1,0 +1,94 @@
+# Problem is to Wrap an input text within the width provided as input
+# Tried out different approches to do the same thing.
+#### Using BIF textwrap ####
+import textwrap
+
+def wrap(text, max_width):
+    t=textwrap.fill(text,max_width)
+    return t
+
+if __name__ == '__main__':
+    text, max_width = input(), int(input())
+    result = wrap(text, max_width)
+    print(result)
+
+#### Using list insert ####
+def wrap_text(text,width):
+    n=len(text)
+    if n<=width:
+        return text
+    else:
+        s=[]
+        for i in range(len(text)):
+            s.append(text[i])
+        t=s.copy()
+        for i in range(len(t)//width,0,-1):
+            t.insert(i*width,'\n')
+        return(''.join(t))
+             
+
+print(wrap_text("abcdefgh",3))
+'''
+abc
+def
+gh
+'''
+#### Using list append only ####
+def wrap_text1(text,width):
+    n=len(text)
+    if n<=width:
+        return text
+    else:
+        s=[]
+        for i in range(len(text)):
+            s.append(text[i])
+        t=[]
+        count=0
+        for l in s:
+            t.append(l)
+            count+=1
+            if count==width:
+                t.append("\n")
+                count=0
+        return(''.join(t))
+        
+             
+
+print(wrap_text1("abcdefgh",3))
+
+##### Using list append in a different way #####
+def wrap_text3(text,width):
+    n=len(text)
+    if n<=width:
+        return text
+    else:
+        s=[]
+        for i in range(len(text)):
+            s.append(text[i])
+        t = []
+        for i in range(len(s)):
+            t.append(s[i])
+            if (i + 1) % width == 0 and i != len(s) - 1:
+                t.append('\n')
+    return (''.join(t))
+
+print(wrap_text3("abcdefgh",3))
+
+#### Using enumerator ####
+
+def wrap_text2(text,width):
+    n=len(text)
+    if n<=width:
+        return text
+    else:
+        s=[]
+        for i in range(len(text)):
+            s.append(text[i])
+        t = []
+        for i, l in enumerate(s):
+            t.append(l)
+            if (i + 1) % width == 0 and i != len(s) - 1:
+                t.append('\n')
+    return (''.join(t))
+
+print(wrap_text2("abcdefgh",3))
